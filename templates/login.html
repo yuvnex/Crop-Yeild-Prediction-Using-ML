@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Login - CropYield AI{% endblock %}
+
+{% block content_no_sidebar %}
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="row w-100" style="max-width: 900px;">
+        <div class="col-md-6 d-none d-md-flex flex-column justify-content-center align-items-center bg-success text-white p-5 rounded-start shadow-lg">
+            <i class="fas fa-leaf fa-5x mb-4 text-light"></i>
+            <h2 class="fw-bold mb-3">CropYield AI</h2>
+            <p class="text-center">Predict your crop yield using advanced Machine Learning models and improve your agricultural output.</p>
+        </div>
+        <div class="col-md-6 bg-white p-5 rounded-end shadow-lg auth-container">
+            <!-- Login Form -->
+            <div id="loginForm">
+                <h3 class="fw-bold mb-4 text-success text-center">Welcome Back</h3>
+                <form action="{{ url_for('auth.login') }}" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Email address</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-success"><i class="fas fa-envelope"></i></span>
+                            <input type="email" name="email" class="form-control" required placeholder="Enter your email">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-success"><i class="fas fa-lock"></i></span>
+                            <input type="password" name="password" class="form-control" required placeholder="Enter your password">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Login As</label>
+                        <select name="role" class="form-select border-success">
+                            <option value="user">Farmer / User</option>
+                            <option value="admin">Administrator</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 py-2 fw-bold shadow-sm">Login</button>
+                </form>
+                <div class="text-center mt-4">
+                    <p class="text-muted">Don't have an account? <a href="#" id="showRegister" class="text-success fw-bold text-decoration-none">Register here</a></p>
+                </div>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" style="display: none;">
+                <h3 class="fw-bold mb-4 text-success text-center">Create Account</h3>
+                <form action="{{ url_for('auth.register') }}" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-success"><i class="fas fa-user"></i></span>
+                            <input type="text" name="name" class="form-control" required placeholder="Enter your full name">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email address</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-success"><i class="fas fa-envelope"></i></span>
+                            <input type="email" name="email" class="form-control" required placeholder="Enter your email">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-success"><i class="fas fa-lock"></i></span>
+                            <input type="password" name="password" class="form-control" required placeholder="Create a password">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 py-2 fw-bold shadow-sm">Register</button>
+                </form>
+                <div class="text-center mt-4">
+                    <p class="text-muted">Already have an account? <a href="#" id="showLogin" class="text-success fw-bold text-decoration-none">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const showRegisterBtn = document.getElementById('showRegister');
+        const showLoginBtn = document.getElementById('showLogin');
+
+        showRegisterBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+        });
+
+        showLoginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerForm.style.display = 'none';
+            loginForm.style.display = 'block';
+        });
+    });
+</script>
+{% endblock %}

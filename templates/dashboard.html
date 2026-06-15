@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - CropYield AI{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+    <h2 class="h3 fw-bold text-success"><i class="fas fa-home me-2"></i>Welcome, {{ user_name }}!</h2>
+    <a href="{{ url_for('prediction.predict') }}" class="btn btn-success rounded-pill px-4 fw-bold shadow-sm">
+        <i class="fas fa-plus me-2"></i>New Prediction
+    </a>
+</div>
+
+<div class="row mb-4 g-4">
+    <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100 feature-card" style="background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);">
+            <div class="card-body p-4 text-dark">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title fw-bold mb-0">Crop Prediction</h5>
+                    <i class="fas fa-seedling fa-2x opacity-50"></i>
+                </div>
+                <p class="card-text">Predict yield based on soil, weather, and fertilizers using advanced ML models.</p>
+                <a href="{{ url_for('prediction.predict') }}" class="btn btn-dark btn-sm rounded-pill mt-2 fw-bold">Predict Now</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100 feature-card" style="background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);">
+            <div class="card-body p-4 text-dark">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title fw-bold mb-0">History</h5>
+                    <i class="fas fa-history fa-2x opacity-50"></i>
+                </div>
+                <p class="card-text">View and manage all your past crop yield predictions and track performance.</p>
+                <a href="{{ url_for('prediction.history') }}" class="btn btn-dark btn-sm rounded-pill mt-2 fw-bold">View History</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100 feature-card" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+            <div class="card-body p-4 text-dark">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title fw-bold mb-0">Reports</h5>
+                    <i class="fas fa-file-export fa-2x opacity-50"></i>
+                </div>
+                <p class="card-text">Export your prediction data directly from the history tab to PDF or Excel formats.</p>
+                <button class="btn btn-dark btn-sm rounded-pill mt-2 fw-bold" onclick="window.location.href='{{ url_for('prediction.history') }}'">Export Data</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8 mb-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="fw-bold mb-0 text-success"><i class="fas fa-chart-line me-2"></i>Platform Overview</h5>
+            </div>
+            <div class="card-body p-4 text-center d-flex flex-column justify-content-center align-items-center">
+                <p class="text-muted mb-4">You are connected to the CropYield AI Machine Learning Engine.<br>Our platform uses <strong>Random Forest</strong>, <strong>Linear Regression</strong>, and <strong>Decision Tree</strong> algorithms to analyze your agricultural data and provide highly accurate yield predictions.</p>
+                
+                <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Agriculture" class="img-fluid rounded-4 shadow-sm" style="max-height: 250px; object-fit: cover; width: 100%;">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 mb-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-success text-white">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-3 border-bottom border-light pb-2"><i class="fas fa-lightbulb me-2"></i>Farming Tips</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-3 d-flex"><i class="fas fa-check-circle mt-1 me-2 text-warning"></i><span>Test your soil regularly to know its exact nutrient profile before adding fertilizers.</span></li>
+                    <li class="mb-3 d-flex"><i class="fas fa-check-circle mt-1 me-2 text-warning"></i><span>Monitor local weather forecasts to optimize your irrigation schedules and save water.</span></li>
+                    <li class="mb-3 d-flex"><i class="fas fa-check-circle mt-1 me-2 text-warning"></i><span>Consider crop rotation to maintain soil health and prevent pest accumulation.</span></li>
+                    <li class="mb-0 d-flex"><i class="fas fa-check-circle mt-1 me-2 text-warning"></i><span>Use our predictive tool before every planting season to set realistic harvest goals.</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

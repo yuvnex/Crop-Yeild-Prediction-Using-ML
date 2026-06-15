@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}Predict Yield - CropYield AI{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="h3 fw-bold text-success border-bottom pb-2"><i class="fas fa-seedling me-2"></i>Crop Yield Prediction</h2>
+        <p class="text-muted">Enter your agricultural data below. Our AI model will analyze the parameters and predict the expected yield.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-7 mb-4">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+                <form method="POST" action="{{ url_for('prediction.predict') }}">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-secondary">Crop Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-success"><i class="fas fa-leaf"></i></span>
+                                <select name="crop_name" class="form-select" required>
+                                    <option value="" disabled selected>Select Crop</option>
+                                    <option value="Rice">Rice</option>
+                                    <option value="Wheat">Wheat</option>
+                                    <option value="Maize">Maize</option>
+                                    <option value="Cotton">Cotton</option>
+                                    <option value="Sugarcane">Sugarcane</option>
+                                    <option value="Soybean">Soybean</option>
+                                    <option value="Barley">Barley</option>
+                                    <option value="Potato">Potato</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-secondary">Soil Type</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-success"><i class="fas fa-layer-group"></i></span>
+                                <select name="soil_type" class="form-select" required>
+                                    <option value="" disabled selected>Select Soil Type</option>
+                                    <option value="Clay">Clay</option>
+                                    <option value="Sandy">Sandy</option>
+                                    <option value="Loamy">Loamy</option>
+                                    <option value="Silt">Silt</option>
+                                    <option value="Peaty">Peaty</option>
+                                    <option value="Saline">Saline</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-secondary">Temperature (°C)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-success"><i class="fas fa-thermometer-half"></i></span>
+                                <input type="number" step="any" name="temperature" class="form-control" placeholder="e.g., 25.5" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-secondary">Rainfall (mm)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-success"><i class="fas fa-cloud-rain"></i></span>
+                                <input type="number" step="any" name="rainfall" class="form-control" placeholder="e.g., 120" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-secondary">Humidity (%)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-success"><i class="fas fa-tint"></i></span>
+                                <input type="number" step="any" name="humidity" class="form-control" placeholder="e.g., 65" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-secondary">Fertilizer Used (kg)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-success"><i class="fas fa-flask"></i></span>
+                                <input type="number" step="any" name="fertilizer" class="form-control" placeholder="e.g., 50" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-secondary">Irrigation Level (Days)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-success"><i class="fas fa-water"></i></span>
+                                <input type="number" step="any" name="irrigation" class="form-control" placeholder="e.g., 10" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-secondary">Land Area (Hectares)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-success"><i class="fas fa-map"></i></span>
+                                <input type="number" step="any" name="area" class="form-control" value="1" placeholder="e.g., 1" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-end">
+                        <button type="reset" class="btn btn-outline-secondary rounded-pill px-4 me-2">Clear</button>
+                        <button type="submit" class="btn btn-success rounded-pill px-5 fw-bold shadow-sm">
+                            <i class="fas fa-magic me-2"></i>Predict
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-5">
+        {% if result %}
+            <div class="card border-0 shadow-sm rounded-4 bg-success text-white">
+                <div class="card-body p-4 text-center">
+                    <h4 class="fw-bold mb-3 border-bottom border-light pb-2">Prediction Results</h4>
+                    <div class="display-4 fw-bold mb-2">{{ result.predicted_yield }} <span class="fs-5 fw-normal">kg</span></div>
+                    <p class="mb-4">Total Predicted Yield</p>
+                    
+                    <div class="row text-center mb-4 g-2">
+                        <div class="col-6">
+                            <div class="p-3 bg-white bg-opacity-25 rounded-3">
+                                <h6 class="mb-1 text-light">Yield Category</h6>
+                                <h5 class="fw-bold mb-0">
+                                    {% if result.yield_category == 'High' %}
+                                        <i class="fas fa-arrow-up text-warning me-1"></i>
+                                    {% elif result.yield_category == 'Medium' %}
+                                        <i class="fas fa-minus text-warning me-1"></i>
+                                    {% else %}
+                                        <i class="fas fa-arrow-down text-danger me-1"></i>
+                                    {% endif %}
+                                    {{ result.yield_category }}
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 bg-white bg-opacity-25 rounded-3">
+                                <h6 class="mb-1 text-light">AI Confidence</h6>
+                                <h5 class="fw-bold mb-0"><i class="fas fa-robot text-warning me-1"></i>{{ result.confidence_score }}%</h5>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-start p-3 bg-dark bg-opacity-25 rounded-3">
+                        <h6 class="fw-bold"><i class="fas fa-lightbulb text-warning me-2"></i>Recommendations</h6>
+                        <ul class="list-unstyled mb-0 small">
+                            {% if result.yield_category == 'Low' %}
+                                <li class="mb-1"><i class="fas fa-angle-right me-1"></i>Consider increasing fertilizer usage after soil testing.</li>
+                                <li><i class="fas fa-angle-right me-1"></i>Check irrigation schedule. Water scarcity may be impacting yield.</li>
+                            {% elif result.yield_category == 'Medium' %}
+                                <li class="mb-1"><i class="fas fa-angle-right me-1"></i>Yield is acceptable, but can be optimized with precise nutrient management.</li>
+                                <li><i class="fas fa-angle-right me-1"></i>Ensure crop is protected from pests and diseases.</li>
+                            {% else %}
+                                <li class="mb-1"><i class="fas fa-angle-right me-1"></i>Excellent expected yield! Maintain current practices.</li>
+                                <li><i class="fas fa-angle-right me-1"></i>Prepare adequate storage or market arrangements for high volume.</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="card border-0 shadow-sm rounded-4 h-100 d-flex justify-content-center align-items-center bg-light p-4 text-center">
+                <i class="fas fa-chart-bar fa-4x text-success opacity-50 mb-3"></i>
+                <h5 class="fw-bold text-secondary">Awaiting Input</h5>
+                <p class="text-muted small">Fill out the form on the left and click predict to see your estimated crop yield and personalized recommendations.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

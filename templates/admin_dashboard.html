@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - CropYield AI{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+    <h2 class="h3 fw-bold text-success"><i class="fas fa-tachometer-alt me-2"></i>Admin Dashboard</h2>
+</div>
+
+<div class="row mb-4 g-4">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-primary text-white">
+            <div class="card-body p-4 text-center">
+                <i class="fas fa-users fa-3x mb-3 opacity-75"></i>
+                <h3 class="display-4 fw-bold">{{ total_users }}</h3>
+                <p class="mb-0 fs-5">Total Registered Farmers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-success text-white">
+            <div class="card-body p-4 text-center">
+                <i class="fas fa-chart-bar fa-3x mb-3 opacity-75"></i>
+                <h3 class="display-4 fw-bold">{{ total_predictions }}</h3>
+                <p class="mb-0 fs-5">Total Predictions Made</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4 g-4">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-white border-0 pt-4 px-4">
+                <h5 class="fw-bold mb-0 text-dark">Most Predicted Crops</h5>
+            </div>
+            <div class="card-body p-4">
+                <canvas id="cropChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-white border-0 pt-4 px-4">
+                <h5 class="fw-bold mb-0 text-dark">Recent Activity</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Crop</th>
+                                <th>Yield</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pred in recent_predictions %}
+                            <tr>
+                                <td>{{ pred.user_name }}</td>
+                                <td>{{ pred.crop_name }}</td>
+                                <td class="text-success">{{ "%.0f"|format(pred.predicted_yield) }} kg</td>
+                                <td class="text-muted small">{{ pred.created_at.strftime('%m-%d %H:%M') }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">No recent activity</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const topCrops = {{ top_crops|tojson }};
+        if (topCrops && topCrops.length > 0) {
+            const labels = topCrops.map(item => item.crop_name);
+            const data = topCrops.map(item => item.count);
+            
+            const ctx = document.getElementById('cropChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            '#198754', '#20c997', '#ffc107', '#0dcaf0', '#6f42c1'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
