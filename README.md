@@ -1,6 +1,5 @@
 # AI-Based Crop Yield Prediction System
 
-A complete full-stack web application for predicting crop yield using Machine Learning.
 
 ## Features
 - **Machine Learning**: Predicts crop yield based on parameters like Soil Type, Temperature, Rainfall, Humidity, Fertilizer, and Irrigation using Random Forest.
