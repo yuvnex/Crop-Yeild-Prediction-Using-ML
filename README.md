@@ -19,5 +19,4 @@
 ## Installation
 Please refer to [INSTALL.md](INSTALL.md) for step-by-step setup instructions.
 
-## API Documentation
-Please refer to [API_DOCS.md](API_DOCS.md) for details on the prediction endpoints.
+
