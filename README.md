@@ -16,7 +16,4 @@
 - **Database**: MySQL
 - **Machine Learning**: Scikit-Learn, Pandas, NumPy, Joblib
 
-## Installation
-Please refer to [INSTALL.md](INSTALL.md) for step-by-step setup instructions.
-
 
