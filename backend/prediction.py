@@ -4,13 +4,14 @@ import joblib
 import pandas as pd
 import numpy as np
 import os
-from config import DB_HOST, DB_USER, DB_PASSWORD, DB_NAME
+from config import DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT
 
 prediction_bp = Blueprint('prediction', __name__)
 
 def get_db_connection():
     return mysql.connector.connect(
         host=DB_HOST,
+        port=DB_PORT,
         user=DB_USER,
         password=DB_PASSWORD,
         database=DB_NAME
