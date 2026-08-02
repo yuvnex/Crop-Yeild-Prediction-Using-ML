@@ -1,6 +1,6 @@
 # Installation Guide
 
-Follow these steps to set up the Crop Yield Prediction application locally.
+Follow these steps to set up the Pasumai Predict application locally.
 
 ## Prerequisites
 - Python 3.8+

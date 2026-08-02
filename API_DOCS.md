@@ -1,6 +1,6 @@
 # API Documentation
 
-The Crop Yield Prediction application uses Flask Blueprints for its internal API structure.
+The Pasumai Predict application uses Flask Blueprints for its internal API structure.
 
 ## Authentication Routes
 

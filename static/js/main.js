@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 const wb = XLSX.utils.table_to_book(cloneTable, { sheet: "Predictions" });
-                XLSX.writeFile(wb, "CropYield_Predictions.xlsx");
+                XLSX.writeFile(wb, "Pasumai_Predict_Predictions.xlsx");
             }
         });
     }
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const doc = new jsPDF();
             
             doc.setFontSize(18);
-            doc.text("CropYield AI - Prediction History", 14, 22);
+            doc.text("Pasumai Predict - Prediction History", 14, 22);
             
             doc.setFontSize(11);
             doc.setTextColor(100);
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headStyles: { fillColor: [25, 135, 84] },
             });
             
-            doc.save("CropYield_Predictions.pdf");
+            doc.save("Pasumai_Predict_Predictions.pdf");
         });
     }
 });
