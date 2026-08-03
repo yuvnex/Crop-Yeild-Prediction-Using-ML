@@ -10,10 +10,5 @@
 - **Dark Mode**: Toggleable dark theme for better visibility.
 - **Responsive UI**: Built with Bootstrap 5 and customized with a modern green agriculture theme.
 
-## Tech Stack
-- **Frontend**: HTML5, CSS3, JavaScript, Bootstrap 5, Chart.js
-- **Backend**: Python, Flask, Flask-Session
-- **Database**: MySQL
-- **Machine Learning**: Scikit-Learn, Pandas, NumPy, Joblib
 
 
