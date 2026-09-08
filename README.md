@@ -7,7 +7,6 @@
 - **Admin Dashboard**: View total predictions, user count, and recent activity.
 - **Visualization**: Chart.js integration for crop yield trends and statistics.
 - **Export Capabilities**: Download your prediction history as PDF or Excel files.
-- **Responsive UI**: Built with Bootstrap 5 and customized with a modern green agriculture theme.
 
 
 
