@@ -6,7 +6,7 @@
 - **User Authentication**: Secure farmer registration and login using session management.
 - **Admin Dashboard**: View total predictions, user count, and recent activity.
 - **Visualization**: Chart.js integration for crop yield trends and statistics.
-- **Export Capabilities**: Download your prediction history as PDF or Excel files.
+
 
 
 
